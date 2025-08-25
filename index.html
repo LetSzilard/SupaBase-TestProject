@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hírek</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <div class="logo-title">
+      <img src="https://img.icons8.com/ios-filled/50/news.png" alt="Hírek logó" class="logo" id="logo">
+      <h1>Hírek a nagyvilágból</h1>
+    </div>
+
+    <div class="filters">
+      <select id="languageFilter"></select>
+      <button id="darkModeToggle">🌙</button>
+    </div>
+  </header>
+  <main>
+    <div id="articles"></div>
+    <button id="loadMore" class="modern-btn">További cikkek betöltése</button>
+  </main>
+</body>
+</html>
