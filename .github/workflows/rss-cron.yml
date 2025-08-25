@@ -11,7 +11,8 @@ jobs:
     steps:
       - name: Call Supabase Edge Function
         run: |
-          curl -X GET \
-          -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
-          -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
-          https://lcqvsevemstgtdncqoki.supabase.co/functions/v1/rss_fetcher
+          curl -s -X GET \
+            -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            https://lcqvsevemstgtdncqoki.supabase.co/functions/v1/rss_fetcher \
+            | jq
