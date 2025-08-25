@@ -12,4 +12,4 @@ jobs:
     steps:
       - name: Call Supabase Edge Function
         run: |
-          curl -X GET https://lcqvsevemstgtdncqoki.functions.supabase.co/rssFetcher
+          curl -X GET https://lcqvsevemstgtdncqoki.functions.supabase.co/rss_fetcher
