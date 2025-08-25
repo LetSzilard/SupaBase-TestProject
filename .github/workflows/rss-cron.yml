@@ -1,0 +1,15 @@
+name: RSS Fetcher Cron
+
+# Ütemezés
+on:
+  schedule:
+    - cron: '0 * * * *'  # minden órában
+  workflow_dispatch:      # manuális indítás lehetősége
+
+jobs:
+  fetch-rss:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Supabase Edge Function
+        run: |
+          curl -X GET https://lcqvsevemstgtdncqoki.functions.supabase.co/rssFetcher

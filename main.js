@@ -16,6 +16,40 @@ const languageMap = {
   // bővíthető
 };
 
+const toggleBtn = document.getElementById("darkModeToggle");
+const logo = document.querySelector(".logo");
+
+function applyTheme(mode) {
+  if(mode === "dark") {
+    document.body.classList.add("dark");
+    toggleBtn.textContent = "☀️";
+    logo.src = "https://img.icons8.com/ios-filled/50/ffffff/news.png";
+  } else {
+    document.body.classList.remove("dark");
+    toggleBtn.textContent = "🌙";
+    logo.src = "https://img.icons8.com/ios-filled/50/000000/news.png";
+  }
+  localStorage.setItem("theme", mode);
+}
+
+// oldal betöltéskor
+const savedTheme = localStorage.getItem("theme");
+const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+applyTheme(savedTheme || (prefersDark ? "dark" : "light"));
+
+// gomb esemény
+toggleBtn.addEventListener("click", () => {
+  const isDark = document.body.classList.contains("dark");
+  applyTheme(isDark ? "light" : "dark");
+});
+
+
+
+// Verzió és build dátum megjelenítése
+const version = "v0.1"; // ezt te állítod kézzel
+const buildDate = new Date().toLocaleString("hu-HU");
+document.getElementById("buildInfo").textContent = `Verzió: ${version} | Build: ${buildDate}`;
+
 
 async function loadArticles() {
   try {
@@ -91,28 +125,47 @@ document.getElementById("languageFilter").addEventListener("change", () => rende
 document.getElementById("loadMore").addEventListener("click", () => renderArticles());
 loadArticles();
 
-const toggleBtn = document.getElementById("darkModeToggle");
-const logo = document.getElementById("logo");
+// const toggleBtn = document.getElementById("darkModeToggle");
+// const logo = document.getElementById("logo");
 
-function setTheme(mode) {
-  if (mode === "dark") {
-    document.body.classList.add("dark");
-    toggleBtn.textContent = "☀️";
-    logo.src = "https://img.icons8.com/ios-filled/50/ffffff/news.png"; // fehér ikon darkhoz
-  } else {
-    document.body.classList.remove("dark");
-    toggleBtn.textContent = "🌙";
-    logo.src = "https://img.icons8.com/ios-filled/50/000000/news.png"; // fekete ikon lighthoz
+// function setTheme(mode) {
+//   if (mode === "dark") {
+//     document.body.classList.add("dark");
+//     toggleBtn.textContent = "☀️";
+//     logo.src = "https://img.icons8.com/ios-filled/50/ffffff/news.png"; // fehér ikon darkhoz
+//   } else {
+//     document.body.classList.remove("dark");
+//     toggleBtn.textContent = "🌙";
+//     logo.src = "https://img.icons8.com/ios-filled/50/000000/news.png"; // fekete ikon lighthoz
+//   }
+//   localStorage.setItem("theme", mode);
+// }
+
+// // Gomb esemény
+// toggleBtn.addEventListener("click", () => {
+//   const isDark = document.body.classList.contains("dark");
+//   setTheme(isDark ? "light" : "dark");
+// });
+
+// // Betöltéskor
+// const savedTheme = localStorage.getItem("theme") || "light";
+// setTheme(savedTheme);
+
+// Automatikus verzió és build dátum
+(async function() {
+  // Lekérjük a legutóbbi commit dátumát és hash-t a GitHub API-ból
+  const repoUser = "felhasznalonev";  // GitHub felhasználó
+  const repoName = "rss-hirek";       // repo név
+  try {
+    const res = await fetch(`https://api.github.com/repos/${repoUser}/${repoName}/commits?per_page=1`);
+    const data = await res.json();
+    if (data && data.length) {
+      const commit = data[0];
+      const commitHash = commit.sha.slice(0,7);
+      const commitDate = new Date(commit.commit.author.date).toLocaleString("hu-HU");
+      document.getElementById("buildInfo").textContent = `Verzió: ${commitHash} | Build: ${commitDate}`;
+    }
+  } catch(e) {
+    console.error("Verzió info lekérése sikertelen:", e);
   }
-  localStorage.setItem("theme", mode);
-}
-
-// Gomb esemény
-toggleBtn.addEventListener("click", () => {
-  const isDark = document.body.classList.contains("dark");
-  setTheme(isDark ? "light" : "dark");
-});
-
-// Betöltéskor
-const savedTheme = localStorage.getItem("theme") || "light";
-setTheme(savedTheme);
+})();

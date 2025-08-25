@@ -156,3 +156,10 @@ select {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+.footer {
+  text-align: center;
+  padding: 10px;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
