@@ -1,10 +1,34 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { parse } from "https://deno.land/x/xml/mod.ts";
 
 // Supabase környezeti változók
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const supabase = createClient(SUPABASE_URL, SERVICE_ROLE);
 
+// ---------------- feed lekérés ----------------
+async function fetchFeedMeta(feedUrl: string) {
+  try {
+    const res = await fetch(feedUrl);
+    if (!res.ok) throw new Error(`Feed letöltési hiba: ${res.status}`);
+    const text = await res.text();
+    const feed = parse(text) as any;
+    const channel = feed.rss?.channel ?? feed.feed ?? {};
+
+    return {
+      site_url: channel.link ?? feedUrl,
+      language: channel.language ?? null,
+    };
+  } catch (e) {
+    console.error(`Hiba feed lekérésénél [${feedUrl}]:`, e.message);
+    return {
+      site_url: feedUrl,
+      language: null,
+    };
+  }
+}
+
+// ---------------- seeder ----------------
 async function runSeeder() {
   const summary: { inserted: number; updated: number; errors: string[] } = {
     inserted: 0,
@@ -13,7 +37,7 @@ async function runSeeder() {
   };
 
   try {
-    // 1️⃣ JSON letöltése Storage-ból
+    // JSON letöltése Storage-ból
     const { data, error: storageError } = await supabase
       .storage
       .from("Feeds")
@@ -25,12 +49,13 @@ async function runSeeder() {
     }
 
     const jsonText = await data.text();
-    const sourcesArray: any[] = JSON.parse(jsonText);
+    const sourcesArray: { site_name: string; feed_url: string }[] = JSON.parse(jsonText);
 
-    // 2️⃣ Feldolgozás és upsert a sources táblába
     for (const source of sourcesArray) {
       try {
-        // Ellenőrizzük, van-e már ilyen feed_url
+        const meta = await fetchFeedMeta(source.feed_url);
+
+        // Ellenőrzés, van-e már ilyen feed_url
         const { data: existingData, error: existingError } = await supabase
           .from("sources")
           .select("*")
@@ -38,7 +63,7 @@ async function runSeeder() {
           .limit(1)
           .single();
 
-        if (existingError && existingError.code !== "PGRST116") { // nincs találat
+        if (existingError && existingError.code !== "PGRST116") {
           summary.errors.push(`Lekérdezési hiba: ${existingError.message}`);
           continue;
         }
@@ -46,42 +71,34 @@ async function runSeeder() {
         const record: any = {
           site_name: source.site_name,
           feed_url: source.feed_url,
-          site_url: source.site_url,
-          active: source.active ?? true,
-          language: source.language ?? null,
-          category: source.category ?? null,
+          site_url: meta.site_url,
+          active: true,
+          language: meta.language,
+          category: null,
           etag: null,
           last_modified: null,
           last_fetched_at: null,
         };
 
-        // Ha már létezik, tartsuk meg a created_at-ot
         if (existingData) {
           record.created_at = existingData.created_at;
           const { error: updateErr } = await supabase
             .from("sources")
             .update(record)
             .eq("id", existingData.id);
-          if (updateErr) {
-            summary.errors.push(`Update hiba [${source.site_name}]: ${updateErr.message}`);
-          } else {
-            summary.updated += 1;
-          }
+          if (updateErr) summary.errors.push(`Update hiba [${source.site_name}]: ${updateErr.message}`);
+          else summary.updated += 1;
         } else {
-          // Új sor beszúrása
           record.created_at = new Date().toISOString();
           const { error: insertErr } = await supabase
             .from("sources")
             .insert(record);
-          if (insertErr) {
-            summary.errors.push(`Insert hiba [${source.site_name}]: ${insertErr.message}`);
-          } else {
-            summary.inserted += 1;
-          }
+          if (insertErr) summary.errors.push(`Insert hiba [${source.site_name}]: ${insertErr.message}`);
+          else summary.inserted += 1;
         }
 
       } catch (itemErr: any) {
-        summary.errors.push(`Item feldolgozási hiba [${source.site_name}]: ${itemErr.message}`);
+        summary.errors.push(`Item feldolgozási hiba [${source.feed_url}]: ${itemErr.message}`);
       }
     }
 
@@ -92,7 +109,7 @@ async function runSeeder() {
   return summary;
 }
 
-// HTTP handler
+// ---------------- HTTP handler ----------------
 Deno.serve(async (req) => {
   const headers = new Headers({
     "Content-Type": "application/json; charset=utf-8",
@@ -101,9 +118,7 @@ Deno.serve(async (req) => {
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   });
 
-  if (req.method === "OPTIONS") {
-    return new Response(null, { status: 204, headers });
-  }
+  if (req.method === "OPTIONS") return new Response(null, { status: 204, headers });
 
   try {
     const summary = await runSeeder();

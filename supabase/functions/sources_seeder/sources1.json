@@ -1,0 +1,178 @@
+[
+  {
+    "site_name": "Telex",
+    "feed_url": "https://telex.hu/rss",
+    "site_url": "https://telex.hu",
+    "language": "hu-HU",
+    "category": "news",
+    "active": true
+  },
+  {
+    "site_name": "444",
+    "feed_url": "https://444.hu/feed",
+    "site_url": "https://444.hu",
+    "language": "hu-HU",
+    "category": "news",
+    "active": true
+  },
+  {
+    "site_name": "Index",
+    "feed_url": "https://index.hu/24ora/rss/",
+    "site_url": "https://index.hu",
+    "language": "hu-HU",
+    "category": "news",
+    "active": true
+  },
+  {
+    "site_name": "HVG",
+    "feed_url": "https://hvg.hu/rss",
+    "site_url": "https://hvg.hu",
+    "language": "hu-HU",
+    "category": "news",
+    "active": true
+  },
+  {
+    "site_name": "Portfolio",
+    "feed_url": "https://www.portfolio.hu/rss/all.xml",
+    "site_url": "https://www.portfolio.hu",
+    "language": "hu-HU",
+    "category": "economy",
+    "active": true
+  },
+  {
+    "site_name": "Sport365",
+    "feed_url": "https://sport365.hu/feed/",
+    "site_url": "https://www.sport365.hu",
+    "language": "hu-HU",
+    "category": "sport",
+    "active": true
+  },
+  {
+    "site_name": "BBC News",
+    "feed_url": "http://feeds.bbci.co.uk/news/rss.xml",
+    "site_url": "https://www.bbc.com",
+    "language": "en-GB",
+    "category": "news",
+    "active": true
+  },
+  {
+    "site_name": "The Guardian",
+    "feed_url": "https://www.theguardian.com/world/rss",
+    "site_url": "https://www.theguardian.com",
+    "language": "en-GB",
+    "category": "news",
+    "active": true
+  },
+  {
+    "site_name": "Reuters Business",
+    "feed_url": "https://ir.thomsonreuters.com/rss/news-releases.xml",
+    "site_url": "https://www.reuters.com",
+    "language": "en-GB",
+    "category": "economy",
+    "active": true
+  },
+  {
+    "site_name": "TechCrunch",
+    "feed_url": "http://feeds.feedburner.com/TechCrunch/",
+    "site_url": "https://techcrunch.com",
+    "language": "en-GB",
+    "category": "tech",
+    "active": true
+  },
+  {
+    "site_name": "The Verge",
+    "feed_url": "https://www.theverge.com/rss/index.xml",
+    "site_url": "https://www.theverge.com",
+    "language": "en-GB",
+    "category": "tech",
+    "active": true
+  },
+  {
+    "site_name": "ESPN",
+    "feed_url": "https://www.espn.com/espn/rss/news",
+    "site_url": "https://www.espn.com",
+    "language": "en-GB",
+    "category": "sport",
+    "active": true
+  },
+  {
+    "site_name": "CNN",
+    "feed_url": "http://rss.cnn.com/rss/cnn_topstories.rss",
+    "site_url": "https://www.cnn.com",
+    "language": "en-GB",
+    "category": "news",
+    "active": true
+  },
+  {
+    "site_name": "New York Times",
+    "feed_url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+    "site_url": "https://www.nytimes.com",
+    "language": "en-GB",
+    "category": "news",
+    "active": true
+  },
+  {
+    "site_name": "Financial Times",
+    "feed_url": "https://www.ft.com/?format=rss",
+    "site_url": "https://www.ft.com",
+    "language": "en-GB",
+    "category": "economy",
+    "active": true
+  },
+  {
+    "site_name": "Wired",
+    "feed_url": "https://www.wired.com/feed/rss",
+    "site_url": "https://www.wired.com",
+    "language": "en-GB",
+    "category": "tech",
+    "active": true
+  },
+  {
+    "site_name": "Bloomberg",
+    "feed_url": "https://www.bloomberg.com/feed/podcast/etf-report.xml",
+    "site_url": "https://www.bloomberg.com",
+    "language": "en-GB",
+    "category": "economy",
+    "active": true
+  },
+  {
+    "site_name": "Guardian Technology",
+    "feed_url": "https://www.theguardian.com/uk/technology/rss",
+    "site_url": "https://www.theguardian.com",
+    "language": "en-GB",
+    "category": "tech",
+    "active": true
+  },
+  {
+    "site_name": "Sky News",
+    "feed_url": "https://feeds.skynews.com/feeds/rss/home.xml",
+    "site_url": "https://news.sky.com",
+    "language": "en-GB",
+    "category": "news",
+    "active": true
+  },
+  {
+    "site_name": "Politico",
+    "feed_url": "https://www.politico.com/rss/politicopicks.xml",
+    "site_url": "https://www.politico.com",
+    "language": "en-GB",
+    "category": "news",
+    "active": false
+  },
+  {
+    "site_name": "CoinTelegraph",
+    "feed_url": "https://cointelegraph.com/editors_pick_rss",
+    "site_url": "https://cointelegraph.com/",
+    "language": "en",
+    "category": "finance",
+    "active": true
+  },
+  {
+    "site_name": "CoinDesk",
+    "feed_url": "https://www.coindesk.com/arc/outboundfeeds/rss",
+    "site_url": "https://www.coindesk.com/",
+    "language": "en-US",
+    "category": "finance",
+    "active": true
+  }
+]
