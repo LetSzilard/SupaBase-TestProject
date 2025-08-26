@@ -54,18 +54,14 @@ a:hover h2 {
   align-items: center;
   gap: 10px;
 }
-.main-menu {
-  grid-area: menu;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
+
 .filters {
   grid-area: filters;
   display: flex;
   gap: 12px;
   align-items: center;
 }
+
 .header-controls {
   grid-area: controls;
   display: flex;
@@ -83,16 +79,21 @@ a:hover h2 {
     max-height: 60px; 
     margin-right: 5px;
   }
-  
 }
 
 .main-menu a {
-  padding: 6px 10px;
+  padding: 8px 14px;
   text-decoration: none;
   color: var(--text-color);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  
 }
+
 .main-menu a:hover {
-  background: rgba(0,0,0,0.05);
+  background: #222;
+  color: #fff;
+  padding: 10px 16px;
   border-radius: 6px;
 }
 
@@ -303,16 +304,23 @@ a:hover h2 {
 @media (min-width: 768px) {
   .header {
     display: grid;
-    grid-template-columns: auto auto 1fr auto auto;
+    grid-template-columns: auto 1fr auto auto auto;
     grid-template-areas: "logo menu search filters controls";
     align-items: center;
     gap: 12px;
   }
 
-  .search-container { 
-    grid-area: search; 
-    display: flex; 
+  .main-menu {
+    justify-self: start;
   }
+
+  .search-container {
+    grid-area: search;
+    justify-self: end; /* mindig jobbra húzza */
+    max-width: 250px;
+    width: 100%;
+  }
+  
   .search-container input {
     width: 100%;
     padding: 5px 10px;
@@ -324,4 +332,14 @@ a:hover h2 {
 
 body.dark .search-container .search-icon {
   color: #ccc; /* sötét módban világosabb */
+}
+
+body.dark .main-menu a {
+  color: #fff; /* sötét módban fehér szöveg */
+}
+
+body.dark .main-menu a:hover {
+  background: #fff;   /* világos háttér */
+  color: #222;        /* sötét szöveg */
+  padding: 10px 16px; /* nagyobb hover méret ugyanúgy */
 }
