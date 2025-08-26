@@ -9,25 +9,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
   <script src="main.js" defer></script>
 </head>
-<body>
+<body id="top">
   <header class="header">
     <div class="logo-title">
-      <img src="https://img.icons8.com/ios-filled/50/news.png" alt="Hírek logó" class="logo" id="logo">
-      <h1>Hírek a nagyvilágból</h1>
+      <a href="#top">
+        <img src="images/WTN-logo.png" alt="Hírek logó" class="logo" id="logo">
+      </a>
     </div>
 
+    <!-- IDE TEDD A MENÜT (közvetlenül a header gyerekeként) -->
+    <nav class="main-menu">
+      <a href="#">Főoldal</a>
+      <a href="#">Rólunk</a>
+      <a href="#">Kapcsolat</a>
+    </nav>
+
     <div class="filters">
-      <label for="languageFilter">Nyelv:</label>
-      <select id="languageFilter"></select>
+      <div class="filter-item">
+        <label for="languageFilter">Nyelv:</label>
+        <select id="languageFilter"></select>
+      </div>
+      <div class="filter-item">
+        <label for="sourceFilter">Forrás:</label>
+        <select id="sourceFilter"></select>
+      </div>
+    </div>
 
-<!--       <label for="categoryFilter">Kategória:</label>
-      <select id="categoryFilter"></select>
- -->
-      <label for="sourceFilter">Forrás:</label>
-      <select id="sourceFilter"></select>
-      
-      <button id="darkModeToggle">🌙</button>
-
+    <div class="header-controls">
+      <button id="darkModeToggle" class="theme-toggle" aria-label="Téma váltás">
+        <!-- (ha SVG-t használsz, itt jöhet az SVG; de most maradhat egyszerű gomb) -->
+        🌙
+      </button>
+      <button id="menuToggle" class="hamburger">☰</button>
     </div>
   </header>
   <main>

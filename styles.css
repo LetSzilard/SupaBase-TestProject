@@ -34,18 +34,6 @@ a:hover h2 {
   text-decoration: underline;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background: var(--card-bg);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
 .logo-title {
   display: flex;
   align-items: center;
@@ -54,8 +42,14 @@ a:hover h2 {
 
 .filters {
   display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.filter-item {
+  display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 }
 
 select {
@@ -71,6 +65,8 @@ select {
   border: none;
   font-size: 20px;
   cursor: pointer;
+  color: var(--text-color); /* világosban fekete, sötétben fehér */
+
 }
 
 #articles {
@@ -167,7 +163,7 @@ select {
 
 body {
   background-color: #b9b9b9;
-  background-image: url('pattern.svg'); /* finom átlátszó mintázat */
+  /* background-image: url('pattern.svg'); finom átlátszó mintázat */
   background-repeat: repeat;
 }
 
@@ -203,4 +199,233 @@ body {
   -webkit-line-clamp: 4;   /* max 4 sor */
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.logo {
+  height: 60px;
+  width: auto;
+}
+
+@media (max-width: 600px) {
+  .logo {
+    max-height: 40px; /* mobil */
+  }
+}
+
+@media (max-width: 767px) {
+  .filters {
+    flex-direction: column; /* mobilon minden sor külön */
+    align-items: flex-start;
+  }
+
+  .filter-item {
+    width: 100%;   /* szépen kitölti */
+    justify-content: space-between;
+  }
+
+  .filter-item select {
+    flex: 1;
+  }
+}
+
+.header-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.hamburger {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-color); /* világos/sötét módhoz igazodik */
+
+}
+
+.main-menu {
+  display: none;
+  flex-direction: column;
+  background: var(--card-bg);
+  position: absolute;
+  top: 100px;  /* fejléc alatt */
+  right: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  padding: 10px;
+}
+.main-menu a {
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-color);
+}
+.main-menu a:hover {
+  background: var(--primary);
+  color: white;
+}
+
+@media (min-width: 768px) {
+  .filters {
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .header-controls {
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .hamburger {
+    display: none; /* desktopon nem kell */
+  }
+
+  .main-menu {
+    display: flex;
+    position: static;
+    flex-direction: row;
+    box-shadow: none;
+    background: none;
+    padding: 0;
+  }
+
+  .main-menu a {
+    padding: 0 10px;
+  }
+}
+
+.filters label {
+  font-size: 0.8rem;   /* kisebb címke */
+}
+
+.filters select {
+  font-size: 0.8rem;   /* kisebb szöveg a legördülőben */
+  padding: 3px 6px;    /* kevesebb belső tér */
+  min-width: 100px;    /* hogy ne legyen túl keskeny */
+}
+
+
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-color); /* világosban fekete, sötétben fehér */
+}
+.theme-toggle svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* --- Header: desktop alap (logo | menu | filters | controls) --- */
+.header {
+  display: grid;
+  grid-template-columns: auto auto 1fr auto; /* logo | menu | filters | controls */
+  grid-template-areas: "logo menu filters controls";
+  align-items: center;
+  background: var(--card-bg);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 8px 16px;
+  gap: 12px;
+}
+
+/* területi elhelyezés */
+.logo-title { grid-area: logo; display:flex; align-items:center; gap:10px; }
+.main-menu   { grid-area: menu; display:flex; gap:12px; align-items:center; }
+.filters     { grid-area: filters; display:flex; gap:12px; align-items:center; }
+.header-controls { grid-area: controls; display:flex; align-items:center; gap:10px; justify-self:end; }
+
+/* menü linkek (desktop) */
+.main-menu a {
+  padding: 6px 10px;
+  text-decoration: none;
+  color: var(--text-color);
+}
+.main-menu a:hover {
+  background: rgba(0,0,0,0.05);
+  border-radius: 6px;
+}
+
+/* hamburger alap (desktopon rejtett) */
+.hamburger {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: var(--text-color);
+  display: none; /* desktopon nincs szükség rá */
+}
+
+/* theme toggle színe */
+#darkModeToggle, .theme-toggle {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--text-color); /* így követi a --text-color változót */
+}
+
+/* kisebb tipográfia a szűrőknél (nehogy összecsússzon) */
+.filters label { font-size: 0.9rem; }
+.filters select { font-size: 0.9rem; padding: 4px 8px; border-radius:8px; }
+
+/* --- Mobil (max-width: 767px) — a kívánt 2-soros, logó kétsoros elrendezés --- */
+@media (max-width: 767px) {
+  .header {
+    grid-template-columns: auto 1fr auto;    /* logo | közép (szűrők) | jobb (controls) */
+    grid-template-rows: auto auto;           /* két sor: felső sor és alsó sor */
+    grid-template-areas:
+      "logo filters controls"
+      "logo filters controls";
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  /* a logó legyen két sor magas (bal oldalon), egyszer szerepel */
+  .logo-title {
+    grid-row: 1 / span 2;
+    align-items: center;
+  }
+
+  /* a menüt mobilon elrejtjük (mobilon hamburger működik) */
+  .main-menu { display: none; }
+
+  /* a szűrők legyenek oszlopban (két filter-item külön sorba kerül) */
+  .filters {
+    grid-row: 1 / span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+  .filter-item { width: 100%; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .filter-item label { font-size: 0.85rem; }
+  .filter-item select { font-size: 0.85rem; padding: 4px 6px; min-width: 90px; }
+
+  /* header controls két sorban: 1. sor = dark toggle, 2. sor = hamburger */
+  .header-controls {
+    grid-row: 1 / span 2;
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 6px;
+    justify-items: end;
+    align-items: center;
+  }
+  #darkModeToggle { grid-row: 1; }
+  #menuToggle { grid-row: 2; display: inline-flex; } /* hamburger mobilon látszik */
+
+  /* kisebb ikonok mobilon */
+  #darkModeToggle, #menuToggle { font-size: 20px; }
+}
+
+/* --- Asztali biztosítás (>=768px) --- */
+@media (min-width: 768px) {
+  .main-menu { display:flex; }       /* desktopon legyen látható a menü */
+  .hamburger { display: none; }     /* desktopon ne látszódjon a hamburger */
+  .filters { flex-direction: row; } /* szűrők egy sorban */
+  .filters .filter-item { align-items:center; }
 }
